@@ -24,6 +24,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 class mockView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
+        print(request.user)
         user = request.user
         user.is_admin = True
         user.save()
