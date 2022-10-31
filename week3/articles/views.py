@@ -35,6 +35,6 @@ class CommentDetailView(APIView):
     def delete(self, request, article_id):
         pass    
 
-class LikeView(APIview):
+class LikeView(APIView):
     def post(self, request):
         pass
