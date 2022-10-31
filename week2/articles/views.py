@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 from articles import serializers
 from articles.models import Article
@@ -8,13 +9,13 @@ from articles.serializers import ArticleSerializer
 
 # Create your views here.
 
-@api_view(['GET', 'POST'])
-def articleAPI(request):
-    if request.method == 'GET':
+class ArticleList(APIView):
+    def get(self, request, format=None):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = ArticleSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
