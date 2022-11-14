@@ -19,11 +19,12 @@ class ArticleView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-        pass
 
 class ArticleDetailView(APIView):
     def get(self, request, article_id):
-        pass
+        article = Article.objects.get(id=article_id)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def put(self, request, article_id):
         pass
