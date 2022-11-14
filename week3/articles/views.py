@@ -1,12 +1,16 @@
 from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
+from articles.models import Article
+from articles.serializers import ArticleSerializer
 
 
 
 class ArticleView(APIView):
     def get(self, request):
-        pass
+        articles = Article.objects.all()
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
         pass
