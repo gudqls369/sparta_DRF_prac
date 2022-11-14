@@ -7,6 +7,11 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields= '__all__'
 
+class ArticleCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields= ("title", "image", "content")
+
 class ArticleListSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
