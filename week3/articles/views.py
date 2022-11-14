@@ -30,12 +30,15 @@ class ArticleDetailView(APIView):
     
     def put(self, request, article_id):
         article = Article.objects.get(id=article_id)
-        serializer = ArticleCreateSerializer(article, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        if request.user == article.user:
+            serializer = ArticleCreateSerializer(article, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response("권한이 없습니다!", status=status.HTTP_403_FORBIDDEN)
     
     def delete(self, request, article_id):
         pass
